@@ -55,7 +55,7 @@ public class TokenRing {
 
     }
 
-    private void setFirstToken( int n){
+    private void setFirstToken(int n) {
         int rnd = new Random().nextInt(length);
         System.out.println("First token sent to: " + rnd);
         Token token = new Token(true, null);

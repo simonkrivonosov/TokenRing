@@ -20,10 +20,6 @@ public class Message {
         return sender;
     }
 
-    public String getMessageBody() {
-        return messageBody;
-    }
-
     public void setStartTime(long startTime){
         this.startTime = startTime;
     }

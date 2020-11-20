@@ -8,7 +8,7 @@ public class Node {
     private ConcurrentLinkedQueue<Message> messagesToSend;
     static volatile boolean isInterrupted = false;
     private final int id;
-    private volatile ConcurrentLinkedQueue<Token> tokens;
+    private final ConcurrentLinkedQueue<Token> tokens;
     private Node nextNode;
     private List<Message> receivedMessage ;
 
@@ -61,10 +61,8 @@ public class Node {
         threadNode.interrupt();
     }
 
-    public void sendToNext(Token token) {
-        synchronized (nextNode.tokens){
-            nextNode.tokens.add(token);
-        }
+    private void sendToNext(Token token) {
+        nextNode.tokens.add(token);
     }
 
     public Queue<Message> getMessagesToSend() {
@@ -75,9 +73,6 @@ public class Node {
         this.messagesToSend = messagesToSend;
     }
 
-    private void receive(Token token) {
-        tokens.add(token);
-    }
 
     void setNext(Node node) {
         System.out.println("Next node of" + id + " is  " + node.id);
@@ -85,17 +80,12 @@ public class Node {
     }
 
     public void sendMessage(Token token) {
-        synchronized (tokens){
-            tokens.add(token);
-            System.out.println("TOKEN " + token + " in node " + id);
-        }
+        tokens.add(token);
+        System.out.println("TOKEN " + token + " in node " + id);
     }
 
     public List<Message> getReceivedMessage() {
         return receivedMessage;
     }
 
-    public void setReceivedMessage(List<Message> receivedMessage) {
-        this.receivedMessage = receivedMessage;
-    }
 }
